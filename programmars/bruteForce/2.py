@@ -1,38 +1,57 @@
-def solution(baseball):
-    answer = 0
-    for i in range(1,10):
-        for j in range(1,10):
-            if(i==j):
-                continue
-            for k in range(1,10):
-                if(i==k):
-                    continue
-                if(j==k):
-                    continue
-                flag = True
-                newNum=str(i * 100 + j * 10 + k)
-                for game in range(len(baseball)):
-                    guess=str(baseball[game][0])
-                    strike = 0
-                    ball = 0
-                    for x in range(3):
-                        for y in range(3):
-                            if(newNum[x]==guess[y]):
-                                if(x==y):
-                                    strike = strike +1
-                                else:
-                                    ball = ball + 1
-                    if(strike!= baseball[game][1] or ball!= baseball[game][2]):
-                        flag = False
-                        break
-                if flag == True:
-                    answer = answer + 1
-    
-    return answer                
+def isPrime(n):
+    if n < 2: 
+        return False 
+    if n in (2, 3): 
+        return True 
+    if n % 2 == 0 or n % 3 == 0:
+        return False 
+    if n < 9: 
+        return True 
+    k, l = 5, n**0.5 
+    while k <= l: 
+        if n % k == 0 or n % (k+2) == 0: 
+            return False 
+        k += 6 
+    return True
 
-def main():
-    baseball = [[123, 1, 1], [356, 1, 0], [327, 2, 0], [489, 0, 1]]
+
+
+def dfs(now,possible,numbers,visited):
     
-    print(solution(baseball))
+    done = True
+    
+    for i in range(len(visited)):
+        if visited[i] == False:
+            done = False
+            
+    if done :
+        return
+    
+    for nextIndex in range(len(visited)):
+        if visited[nextIndex] == False:
+            visited[nextIndex] = True
+            possible.append(int(now + numbers[nextIndex]))
+            dfs(now + numbers[nextIndex],possible,numbers,visited)
+            visited[nextIndex] = False
+    
+    
+def solution(numbers):
+
+    visited = [False] * len(numbers)
+    possible = []
+    
+    dfs('',possible,numbers,visited)    
+    
+    possible=list(set(possible))
+    
+    answer = 0
+    for possibleValue in possible:
+        if isPrime(possibleValue):
+            answer += 1
+    return answer       
+
+def main():    
+    print(solution("17"))
+    print(solution("011"))
     
 main()
