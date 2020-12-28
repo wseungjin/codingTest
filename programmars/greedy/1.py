@@ -1,59 +1,42 @@
-def solution(name):
-    answer1 = 0
-    answer2 = 0
-    string1= ""
-    string2= ""
-    for i in range(len(name)):
-        # print(name[i])
-        string1 = string1 + "A"
-        string2 = string2 + "A"
+def solution(n, lost, reserve):
+    
+    beDeleted = []
+    for lostStudent in lost:
+        for reserveStudent in reserve:
+            if lostStudent == reserveStudent:
+                beDeleted.append(lostStudent)
+                
+    for beDeletedStudent in beDeleted:
+        lost.remove(beDeletedStudent)
+        reserve.remove(beDeletedStudent)
         
-    # print(string1)
-    for i in range(len(name)):
-        if string1 == name:
-            break
-        if string1[i]!=name[i]: 
-            if ord(name[i])<(ord("A")+ord("Z"))/2:
-                answer1=answer1 + ord(name[i])-ord("A")
-            else: 
-                answer1=answer1 + 1 + ord("Z")-ord(name[i])
-            string1 = string1[:i] + name[i] + string1[i+1:]
-        if string1 == name:
-            break
-        answer1 = answer1 + 1
-
-
+    lost = sorted(lost)
+    reserve = sorted(reserve)
         
-    if string2 != name:
-        if string2[0]!=name[0]: 
-            if ord(name[0])<(ord("A")+ord("Z"))/2:
-                answer2=answer2 + ord(name[0])-ord("A")
-            else: 
-                answer2=answer2 + 1 + ord("Z")-ord(name[0])
-            string2 = string2[:0] + name[0] + string2[1:]
-        if string2 != name:
-            answer2 = answer2 + 1
-    for i in range(len(name)-1,0,-1):
-        if string2 == name:
-            break
-        if string2[i]!=name[i]: 
-            if ord(name[i])<(ord("A")+ord("Z"))/2:
-                answer2=answer2 + ord(name[i])-ord("A")
-            else: 
-                answer2=answer2 + 1 + ord("Z")-ord(name[i])
-            string2 = string2[:i] + name[i] + string2[i+1:]
-
-        if string2 == name:
-            break
-        answer2 = answer2 + 1
-            
-    answer=min(answer1,answer2)
+    answer = n - len(lost)
+    nowReserveIndex = 0
+                    
+    for lostStudent in lost:
+        while(nowReserveIndex < len(reserve)):
+            if (reserve[nowReserveIndex] > lostStudent + 1):
+                break
+            if (reserve[nowReserveIndex] == lostStudent - 1 ) or  (reserve[nowReserveIndex] == lostStudent + 1 ):
+                answer = answer + 1
+                nowReserveIndex = nowReserveIndex + 1
+                break 
+            nowReserveIndex = nowReserveIndex + 1
     return answer
 
+def main():    
+    print(solution(5,[2,4],[1,3,5]))
+    print(solution(5,[2,4],[3]))
+    print(solution(3,[3],[1]))
+    print(solution(2,[1,2],[1]))
+    print(solution(5,[1,2,4,5],[2,3,4]))
+    print(solution(5,[2,3,4],[3,4,5]))
+    print(solution(27,[10,16,19,20,24,26,27],[4,7,8,10,13,14,16,17,18,19,21,22,23,24,25,26,27]))     
+    print(solution(10,[1,5,10],[7,9,10]))
 
-def main():
-    name = "AZAAAZ"
-    
-    print(solution(name))
+
     
 main()
