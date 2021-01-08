@@ -32,12 +32,14 @@ def solution(x,spaces):
         
     maxValue = -1
     for start in range(len(spaces) - x + 1):
-        maxValue = max(maxValue,minimum(trees,1,0,size -1,start,start + x))
-    
+        maxValue = max(maxValue,minimum(trees,1,0,N -1,start,start + x - 1))
+            
     return maxValue
 
 def main():
     print(solution(2,[8,2,4,6])) 
     print(solution(1,[1,2,3,1,2]))
+    print(solution(2,[1,1,1]))
+    print(solution(3,[2,5,4,6,8]))
 
 main()
