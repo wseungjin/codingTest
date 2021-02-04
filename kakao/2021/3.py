@@ -1,4 +1,3 @@
-import re
 answer = 0
 data = {'java': {'backend': {'junior': {'chicken': {} , "pizza" : {}},"senior": {'chicken': {} , "pizza" : {}}}, "frontend" : {'junior': {'chicken': {} , "pizza" : {}},"senior": {'chicken': {} , "pizza" : {}}}} ,
     'python': {'backend': {'junior': {'chicken': {} , "pizza" : {}},"senior": {'chicken': {} , "pizza" : {}}}, "frontend" : {'junior': {'chicken': {} , "pizza" : {}},"senior": {'chicken': {} , "pizza" : {}}}},
